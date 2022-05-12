@@ -4,8 +4,8 @@
   "description": "REST API IP4IT Requests Project",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,22 @@
   "bugs": {
     "url": "https://github.com/filipedsantos/IP4IT-Requests/issues"
   },
-  "homepage": "https://github.com/filipedsantos/IP4IT-Requests#readme"
+  "homepage": "https://github.com/filipedsantos/IP4IT-Requests#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.3",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "prettier": "^2.6.2"
+  }
 }
