@@ -4,7 +4,6 @@ const requestSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'A Request needs to have a Person name!'],
-    unique: true,
     trim: true,
     maxLength: [40, 'A Name must have less or equal then 40 characters!'],
     minLength: [4, 'A Name must have more or equal then 4 characters!'],
@@ -19,6 +18,11 @@ const requestSchema = new mongoose.Schema({
     default: true,
   },
 });
+
+requestSchema.methods.finishRequest = function () {
+  this.isOpen = false;
+  this.deliveredAt = Date.now();
+};
 
 const Request = mongoose.model('Request', requestSchema);
 module.exports = Request;
