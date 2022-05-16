@@ -3,6 +3,7 @@ const morgan = require('morgan');
 
 const requestRouter = require('./routes/requestRoutes');
 const userRoute = require('./routes/userRoutes');
+const hardwareRoute = require('./routes/hardwareRoutes');
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.use(express.json());
 // Routes
 app.use('/api/v1/requests', requestRouter);
 app.use('/api/v1/users', userRoute);
+app.use('/api/v1/hardware', hardwareRoute);
 
 module.exports = app;

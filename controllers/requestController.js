@@ -1,9 +1,7 @@
-const factory = require('../controllers/handlerFactory');
 const Request = require('../models/requestModel');
+const factory = require('../controllers/handlerFactory');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-
-const requestModel = require('../models/requestModel');
 
 exports.getAllRequests = factory.getAll(Request);
 exports.createRequest = factory.createOne(Request);
