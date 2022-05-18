@@ -19,9 +19,20 @@ const hardwareSchema = new mongoose.Schema({
     required: [true, 'A Hardware must have a type!'],
     enum: ['Headset', 'Webcam', 'Other'],
   },
+  // Variable to store if Hardware it's disponible to use
   inUse: {
     type: Boolean,
     default: false,
+  },
+  // Variable to store if Hardware it's in available or has been deleted
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
+  timesUsed: {
+    type: Number,
+    default: 0,
   },
 });
 
