@@ -1,0 +1,15 @@
+extends base
+
+block content
+    main.pagewrap
+        .section
+            h2.section__title Log in
+            form.form.form--login
+                .form__group
+                    label.form__label(for='email') Email
+                    input#email.form__input(type='email', placeholder='you@example.com', value='filipe@mail.io' required)
+                .form__group.ma-bt-md
+                    label.form__label(for='password') Password
+                    input#password.form__input(type='password', placeholder='••••••••', value='1234' required, minlength='4')
+                .form__footer
+                    a.btn Login

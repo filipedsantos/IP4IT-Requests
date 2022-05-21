@@ -5,8 +5,10 @@ html
             meta(charset='UTF-8')
             meta(name='viewport' content='width=device-width, initial-scale=1.0')
             link(rel='stylesheet' href='/css/style.css')
-            script(defer src='/js/index.js')
-            title IP4IT Requests
+            script(defer type='module' src='/js/index.js')
+
+
+            title IP4IT Requests | #{title}
 
 
     body
@@ -20,3 +22,4 @@ html
         // #Footer
         include _footer
 
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js')

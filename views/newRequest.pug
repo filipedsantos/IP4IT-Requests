@@ -1,0 +1,31 @@
+extends base
+
+block content
+    main.pagewrap
+        .section
+            h2.section__title New Request
+            form.form.form--new-request
+                .form__group
+                    label.form__label(for='user') Name
+                    input#user.form__input(type='text', placeholder='Insert your name', required)
+                .form__group
+                    label.form__label(for='headset') Headset
+                    select#headset.form__input(name='headset')
+                        optgroup(label='Pick a Headset')
+                            <option value="None" selected>None</option>
+                                each hardw in hardware
+                                    if hardw.hardwareType == 'Headset'
+                                        option(value=`${hardw._id}`)
+                                            span= `${hardw.tag}`
+                .form__group
+                    label.form__label(for='webcam') Webcam
+                    select#webcam.form__input(name='webcam')
+                        optgroup(label='Pick a Webcam')
+                            <option value="None" selected>None</option>
+                                each hardw in hardware
+                                    if hardw.hardwareType == 'Webcam'
+                                        option(value=`${hardw._id}`)
+                                            span= `${hardw.tag}`
+
+                .form__footer
+                    button.btn Request

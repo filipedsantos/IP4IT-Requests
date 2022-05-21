@@ -5,7 +5,6 @@ const { promisify } = require('util');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const { decode } = require('punycode');
 
 const signToken = id =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -91,13 +90,16 @@ exports.protect = catchAsync(async (req, res, next) => {
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
+
   if (!token) {
     return next(
       new AppError('You are not logged in! Please log in to have access!', 401)
     );
   }
+
   // 2. Verify token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  console.log(decoded);
 
   // 3. Check if user still exists
   const currentUser = await User.findById(decoded.id);
@@ -151,3 +153,35 @@ exports.restrictTo = (...roles) =>
     }
     next();
   });
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  res.status(200).json({
+    status: 'success',
+    message:
+      'Work in progress -- check if its possbible to send email to Gbn accounts?? IF not return token with this same API',
+  });
+});
+
+exports.resetPassword = catchAsync(async (req, res, nexy) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Work in progress',
+  });
+});
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  // 1. Get User from collection
+  const user = await User.findById(req.user.id).select('+password');
+
+  // 2. Get if POSTED password is correct
+  if (!user.correctPassword(req.body.passwordCurrent, user.password)) {
+    return next(new AppError('Your current pasword is wrong!', 401));
+  }
+
+  // 3. If all good Update Password
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+
+  createSendToken(user, 200, res);
+});

@@ -1,17 +1,27 @@
 
 block content
     main
-        div 
-            a.btn(href='#') New Request
-        div
-            table
-                tr
-                    th: span Time
-                    th: span Name
-                    th: span Hardware
-                    th: span Status
-                tr
-                    td: span 10:00
-                    td: span Filipe
-                    td: span HS-01
-                    td: span Open
+        div.section
+            a.btn.btn__new-request(href='/newRequest') New Request
+
+
+        .welcome-gnb.section
+            - if (requests.length === 0)
+                h1.section__title Welcome to Geneva Business News
+            - else
+
+                .welcome-requests
+                    div.section
+                        table.requests__table
+                            tr
+                                th: span Time
+                                th: span Name
+                                th: span Hardware
+                                th: span Status
+                            each request in requests
+                                tr.requests__row
+                                    td: span= request.requestAt.toLocaleString('en-UK', {hour: 'numeric', minute:'numeric', year: 'numeric', month: 'long', day: 'numeric'})
+                                    td: span= request.user
+                                    - let hw = request.hardware.map(el => {return el.tag;});
+                                    td: span= hw
+                                    td: button.btn.btn__finish-request(request-id=`${request._id}`, request-open=`${request.isOpen}`, class=`${request.isOpen ? '' : 'request--closed'}`)= `${request.isOpen ? 'Open' : 'Closed'}`

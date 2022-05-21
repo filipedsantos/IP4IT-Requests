@@ -18,7 +18,7 @@ const app = express();
 
 // Global Middlewares
 // Set Security HTTP Headers
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));

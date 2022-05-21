@@ -15,7 +15,7 @@ class APIFeatures {
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|le)\b/g, match => `$${match}`);
 
-    this.query = this.query.find(JSON.parse(queryStr));
+    this.query.find(JSON.parse(queryStr));
     return this;
   }
 
@@ -23,16 +23,16 @@ class APIFeatures {
     if (this.queryString.sort) {
       // sort('price,ratingsAverage') -> postman query (separated by ,)
       // sort('price ratingsAverage') -> mongoose query
-      const sortBy = this.queryString.sort.split(','.join(' '));
+      const sortBy = this.queryString.sort.split(',').join(' ');
       this.query = this.query.sort(sortBy);
     } else {
-      this.query = this.query.sort('-createdAt');
+      this.query.sort('-createdAt');
     }
     return this;
   }
 
   limitFields() {
-    if (this.queryString.fileds) {
+    if (this.queryString.fields) {
       const fields = this.queryString.fields.split(',').join(' ');
       // query.selected -> it's called query projection
       this.query = this.query.select(fields);
