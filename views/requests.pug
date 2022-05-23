@@ -13,15 +13,21 @@ block content
                 .welcome-requests
                     div.section
                         table.requests__table
-                            tr
-                                th: span Time
-                                th: span Name
-                                th: span Hardware
-                                th: span Status
-                            each request in requests
-                                tr.requests__row
-                                    td: span= request.requestAt.toLocaleString('en-UK', {hour: 'numeric', minute:'numeric', year: 'numeric', month: 'long', day: 'numeric'})
-                                    td: span= request.user
-                                    - let hw = request.hardware.map(el => {return el.tag;});
-                                    td: span= hw
-                                    td: button.btn.btn__finish-request(request-id=`${request._id}`, request-open=`${request.isOpen}`, class=`${request.isOpen ? '' : 'request--closed'}`)= `${request.isOpen ? 'Open' : 'Closed'}`
+                            thead 
+                                tr
+                                    th
+                                    th: span Time
+                                    th: span Name
+                                    th: span Hardware
+                                    th: span Status
+                            tbody
+                                each request in requests
+                                    tr.requests__row
+                                        td
+                                            a(href='/' + request._id)
+                                                span(class="material-symbols-outlined btnEdit") edit
+                                        td: span= request.requestAt.toLocaleString('en-UK', {hour: 'numeric', minute:'numeric', year: 'numeric', month: 'long', day: 'numeric'})
+                                        td: span= request.user
+                                        - let hw = request.hardware.map(el => {return el.tag;});
+                                        td: span= hw
+                                        td: button.btn.btn__finish-request(request-id=`${request._id}`, request-open=`${request.isOpen}`, class=`${request.isOpen ? '' : 'request--closed'}`)= `${request.isOpen ? 'Open' : 'Closed'}`

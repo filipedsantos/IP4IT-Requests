@@ -1,0 +1,40 @@
+extends base
+
+block content
+    main.pagewrap
+        .section
+            h2.section__title Edit Request
+            form.form.form--new-request
+                .form__group
+                    label.form__label(for='user') Name
+                    input#user.form__input(type='text', placeholder='Insert your name', value=`${request[0].user}`, required)
+                .form__group
+                    label.form__label(for='headset') Headset
+                    select#headset.form__input(name='headset')
+                        optgroup(label='Pick a Headset')
+                            option(value='None', selected)= 'None'
+                            - let hs = request[0].hardware.find(el => el.hardwareType === 'Headset')
+                                if hs
+                                    option(value=`${hs._id}` selected)= `${hs.tag}`
+
+                                each hardw in hardware
+                                    if hardw.hardwareType === 'Headset'
+                                        option(value=`${hardw._id}`)
+                                            span= `${hardw.tag}`
+
+                .form__group
+                    label.form__label(for='webcam') Webcam
+                    select#webcam.form__input(name='webcam')
+                        optgroup(label='Pick a Webcam')
+                            option(value='None', selected)= 'None'
+                            - let ca = request[0].hardware.find(el => el.hardwareType === 'Webcam')
+                                if ca
+                                    option(value=`${ca._id}` selected)= `${ca.tag}`
+                                each hardw in hardware
+
+                                    if hardw.hardwareType === 'Webcam'
+                                        option(value=`${hardw._id}`)
+                                            span= `${hardw.tag}`
+
+                .form__footer
+                    button.btn Update

@@ -13,6 +13,7 @@ router
 
 router
   .route('/:id')
+  .get(requestController.getOneRequest)
   .patch(requestController.updateRequest)
   .delete(requestController.deleteRequest);
 

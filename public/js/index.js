@@ -45,7 +45,20 @@ if (btnFinishRequestParent) {
         click == 'true'
       ) {
         const id = e.target.getAttribute('request-id');
+        console.log(id);
         finishRequest(id);
+      }
+    });
+
+  document
+    .querySelector('.requests__table')
+    .addEventListener('click', function (e) {
+      if (
+        !e.target.classList.contains('btn__finish-request') &&
+        e.target.parentElement.classList.contains('requests__row')
+      ) {
+        const id = e.target.parentElement.getAttribute('request-id');
+        console.log(id);
       }
     });
 }

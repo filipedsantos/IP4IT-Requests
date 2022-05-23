@@ -318,8 +318,14 @@ img {
   padding: 1rem 1rem;
 }
 
-.requests__table tr:hover {
-  background-color: var(--first-color-alt);
+.btnEdit {
+  font-size: 32px !important;
+}
+
+.btnEdit:hover {
+  color: var(--first-color);
+  transform: scale(1.1);
+  transition: 0.2s;
 }
 
 /*=============== FOOTER ===============*/

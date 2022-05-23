@@ -46,29 +46,32 @@ requestSchema.pre('save', function (next) {
   next();
 });
 
-requestSchema.post('save', function () {
-  this.constructor.updateHardwareToBeUsed(this.hardware);
-});
-
-requestSchema.methods.setFinishRequest = function () {
+requestSchema.methods.setRequestToFinish = function () {
   this.isOpen = false;
   this.deliveredAt = Date.now();
+  this.constructor.updateHardwareToBeNotUse(this.hardware);
 };
 
-requestSchema.statics.updateHardwareToBeUsed = async function (hardwIds) {
-  console.log('--', hardwIds);
+requestSchema.methods.updateHardwareToUsed = function () {
+  this.constructor.updateHardwareToBeInUse(this.hardware);
+};
 
+requestSchema.statics.updateHardwareToBeInUse = async function (hardwIds) {
   for (const h of hardwIds) {
-    console.log(h.timesUsed);
+    console.log(h);
     const hs = await Hardware.findByIdAndUpdate(h._id, {
       inUse: true,
+    });
+  }
+};
+
+requestSchema.statics.updateHardwareToBeNotUse = async function (hardwIds) {
+  for (const h of hardwIds) {
+    const hs = await Hardware.findByIdAndUpdate(h._id, {
+      inUse: false,
       $inc: { timesUsed: 1 },
     });
-
-    console.log(hs);
   }
-
-  // const usedHw = await this.agregate([{ $match: { hardware: hardwId } }]);
 };
 
 const Request = mongoose.model('Request', requestSchema);
