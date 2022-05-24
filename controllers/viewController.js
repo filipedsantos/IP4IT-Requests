@@ -5,10 +5,22 @@ const Hardware = require('../models/hardwareModel');
 const Request = require('../models/requestModel');
 
 exports.getRequests = catchAsync(async (req, res, next) => {
-  const requests = await Request.find().sort({ isOpen: -1 }).populate({
-    path: 'hardware',
-    fields: 'tag',
-  });
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const requests = await Request.find({
+    requestAt: {
+      $gte: today,
+      $lte: tomorrow,
+    },
+  })
+    .sort({ isOpen: -1 })
+    .populate({
+      path: 'hardware',
+      fields: 'tag',
+    });
 
   res.status(200).render('index', {
     title: 'Welcome',

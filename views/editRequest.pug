@@ -4,7 +4,7 @@ block content
     main.pagewrap
         .section
             h2.section__title Edit Request
-            form.form.form--new-request
+            form.form.form--edit-request
                 .form__group
                     label.form__label(for='user') Name
                     input#user.form__input(type='text', placeholder='Insert your name', value=`${request[0].user}`, required)
@@ -37,4 +37,4 @@ block content
                                             span= `${hardw.tag}`
 
                 .form__footer
-                    button.btn Update
+                    button.btn.btn__edit-request(request-id=`${request[0]._id}`) Update
