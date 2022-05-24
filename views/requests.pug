@@ -24,8 +24,8 @@ block content
                                 each request in requests
                                     tr.requests__row
                                         td
-                                            a(href='/' + request._id)
-                                                span(class="material-symbols-outlined btnEdit") edit
+                                            a
+                                                span(class="material-symbols-outlined btnEdit" request-id=`${request._id}`) edit
                                         td: span= request.requestAt.toLocaleString('en-UK', {hour: 'numeric', minute:'numeric', year: 'numeric', month: 'long', day: 'numeric'})
                                         td: span= request.user
                                         - let hw = request.hardware.map(el => {return el.tag;});

@@ -16,7 +16,7 @@ exports.getRequests = catchAsync(async (req, res, next) => {
       $lte: tomorrow,
     },
   })
-    .sort({ isOpen: -1 })
+    .sort({ isOpen: -1, requestAt: -1 })
     .populate({
       path: 'hardware',
       fields: 'tag',
