@@ -12,26 +12,28 @@ block content
                     label.form__label(for='headset') Headset
                     select#headset.form__input(name='headset')
                         optgroup(label='Pick a Headset')
-                            option(value='None', selected)= 'None'
+
                             - let hs = request[0].hardware.find(el => el.hardwareType === 'Headset')
                                 if hs
                                     option(value=`${hs._id}` selected)= `${hs.tag}`
-
-                                each hardw in hardware
-                                    if hardw.hardwareType === 'Headset'
-                                        option(value=`${hardw._id}`)
-                                            span= `${hardw.tag}`
+                                else
+                                    option(value='None', selected)= 'None'
+                                    each hardw in hardware
+                                        if hardw.hardwareType === 'Headset'
+                                            option(value=`${hardw._id}`)
+                                                span= `${hardw.tag}`
 
                 .form__group
                     label.form__label(for='webcam') Webcam
                     select#webcam.form__input(name='webcam')
                         optgroup(label='Pick a Webcam')
-                            option(value='None', selected)= 'None'
+
                             - let ca = request[0].hardware.find(el => el.hardwareType === 'Webcam')
                                 if ca
                                     option(value=`${ca._id}` selected)= `${ca.tag}`
+                                else
+                                option(value='None', selected)= 'None'
                                 each hardw in hardware
-
                                     if hardw.hardwareType === 'Webcam'
                                         option(value=`${hardw._id}`)
                                             span= `${hardw.tag}`
