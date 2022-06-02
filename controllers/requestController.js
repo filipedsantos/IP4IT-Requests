@@ -6,7 +6,7 @@ const catchAsync = require('../utils/catchAsync');
 exports.getAllRequests = factory.getAll(Request);
 // exports.createRequest = factory.createOne(Request);
 exports.getOneRequest = factory.getOne(Request);
-exports.updateRequest = factory.updateOne(Request);
+// exports.updateRequest = factory.updateOne(Request);
 exports.deleteRequest = factory.deleteOne(Request);
 
 exports.createRequest = catchAsync(async (req, res, next) => {
@@ -29,5 +29,22 @@ exports.finishRequest = catchAsync(async (req, res, next) => {
     data: {
       request: updateRequest,
     },
+  });
+});
+
+exports.updateRequest = catchAsync(async (req, res, next) => {
+  const reqToUpdate = await Request.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  reqToUpdate.updateHardwareToUsed();
+
+  if (!reqToUpdate) {
+    return next(new AppError('No document found with thar ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: { data: reqToUpdate },
   });
 });

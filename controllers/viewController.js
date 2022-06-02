@@ -11,10 +11,11 @@ exports.getRequests = catchAsync(async (req, res, next) => {
   tomorrow.setDate(tomorrow.getDate() + 1);
 
   const requests = await Request.find({
-    requestAt: {
-      $gte: today,
-      $lte: tomorrow,
-    },
+    // requestAt: {
+    //   $gte: today,
+    //   $lte: tomorrow,
+    // },
+    isOpen: true,
   })
     .sort({ isOpen: -1, requestAt: -1 })
     .populate({
@@ -30,7 +31,13 @@ exports.getRequests = catchAsync(async (req, res, next) => {
 
 exports.getLoginForm = catchAsync(async (req, res, next) => {
   res.status(200).render('login', {
-    title: 'Login Page',
+    title: 'Login',
+  });
+});
+
+exports.getSignUpForm = catchAsync(async (req, res, next) => {
+  res.status(200).render('signup', {
+    title: 'Sign Up',
   });
 });
 

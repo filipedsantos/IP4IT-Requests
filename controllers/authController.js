@@ -60,12 +60,8 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password!', 401));
 
   // 3. If everything ok, sent token to client
-  console.log(user._id.valueOf());
-  const token = signToken(user._id);
-  res.status(200).json({
-    status: 'success',
-    token,
-  });
+  // 3. If everything ok, send token to client
+  createSendToken(user, 201, res);
 });
 
 exports.logout = (req, res) => {
@@ -117,33 +113,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-// Only for rendered pages, no errors!
-exports.isLoggedIn = async (req, res, next) => {
-  if (req.cookies.jwt) {
-    try {
-      // 1. Verificate token
-      const decoded = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRET
-      );
-
-      // 2. Verify if user still exists
-      const currentUser = await User.findById(decoded.id);
-      if (!currentUser) return next();
-
-      // 3. Check if user changed password after jwt was issued
-      if (currentUser.changedPasswordAfter(decoded.iat)) return next();
-
-      // 4. Return the user loggedIn
-      res.locals.user = currentUser;
-      return next();
-    } catch (error) {
-      next();
-    }
-  }
-  next();
-};
-
 exports.restrictTo = (...roles) =>
   catchAsync(async (req, res, next) => {
     if (!roles.includes(req.user.roles)) {
@@ -185,3 +154,30 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   createSendToken(user, 200, res);
 });
+
+// Only for rendered pages, no errors!
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt && req.cookies.jwt !== 'loggedout') {
+    try {
+      // 1. Verificate token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      // 2. Verify if user still exists
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) return next();
+
+      // 3. Check if user changed password after jwt was issued
+      if (currentUser.changedPasswordAfter(decoded.iat)) return next();
+
+      // 4. Return the user loggedIn
+      res.locals.user = currentUser;
+      return next();
+    } catch (error) {
+      next();
+    }
+  }
+  next();
+};

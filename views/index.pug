@@ -2,4 +2,9 @@ extends base
 
 block content
     main.pagewrap
-        include requests
+        - console.log('--USER:', user)
+        if user
+            include requests
+        else
+             h1.section__title Welcome to Geneva Business News.
+             h3.section__subtitle Please Log in to have access.
