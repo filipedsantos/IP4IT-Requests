@@ -4,12 +4,23 @@ export const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Origin': 'true',
+      },
       url: 'http://localhost:3000/api/v1/users/login',
+      // headers: {
+      //   'Access-Control-Allow-Origin': '*',
+      //   'Content-type': 'application/json',
+      // },
+      // withCredentials: true,
       data: {
         email,
         password,
       },
     });
+
+    console.log(res);
 
     if (res.data.status === 'success') {
       showAlert('success', 'Login successfull!');

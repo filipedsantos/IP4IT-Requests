@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    container_name: ip4it-requests
+    hostname: ip4it-requests
+    restart: always
+    build: .
+    ports:
+      - '3000:3000'
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - '27017:27017'
+  nginx:
+    restart: always
+    build: ./nginx
+    ports:
+      - '80:80'

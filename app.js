@@ -7,6 +7,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 
+const cors = require('cors');
+
 const requestRouter = require('./routes/requestRoutes');
 const userRoute = require('./routes/userRoutes');
 const hardwareRoute = require('./routes/hardwareRoutes');
@@ -17,6 +19,12 @@ const viewRouter = require('./routes/viewRouter');
 const app = express();
 
 // Global Middlewares
+
+// Implement CORS
+// Access-Control-Allow-Origin *
+app.use(cors());
+app.options('*', cors());
+
 // Set Security HTTP Headers
 app.use(helmet({ contentSecurityPolicy: false }));
 
@@ -50,6 +58,11 @@ app.use(xss());
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   next();
+// });
 
 // Routes
 app.use('/', viewRouter);
