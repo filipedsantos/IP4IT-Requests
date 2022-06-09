@@ -6,7 +6,7 @@ export const sendNewRequest = async (name, hardware) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:3000/api/v1/requests',
+      url: '/api/v1/requests',
       data: {
         user: name,
         hardware,
@@ -28,7 +28,7 @@ export const sendEditRequest = async (id, name, hardware) => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: `http://localhost:3000/api/v1/requests/${id}`,
+      url: `/api/v1/requests/${id}`,
       data: {
         user: name,
         isOpen: true,
@@ -51,7 +51,7 @@ export const finishRequest = async id => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: `http://localhost:3000/api/v1/requests/finishRequest/${id}`,
+      url: `/api/v1/requests/finishRequest/${id}`,
     });
 
     if (res.data.status === 'success') {

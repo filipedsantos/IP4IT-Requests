@@ -4,23 +4,12 @@ export const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      withCredentials: true,
-      headers: {
-        'Access-Control-Allow-Origin': 'true',
-      },
-      url: 'http://localhost:3000/api/v1/users/login',
-      // headers: {
-      //   'Access-Control-Allow-Origin': '*',
-      //   'Content-type': 'application/json',
-      // },
-      // withCredentials: true,
+      url: '/api/v1/users/login',
       data: {
         email,
         password,
       },
     });
-
-    console.log(res);
 
     if (res.data.status === 'success') {
       showAlert('success', 'Login successfull!');
@@ -29,17 +18,15 @@ export const login = async (email, password) => {
       }, 500);
     }
   } catch (error) {
-    showAlert('error', error.response.data);
+    showAlert('error', error);
   }
 };
 
 export const logout = async () => {
   try {
-    console.log('im here');
-
     const res = await axios({
       method: 'GET',
-      url: 'http://localhost:3000/api/v1/users/logout',
+      url: '/api/v1/users/logout',
     });
     if (res.data.status === 'success') {
       showAlert('success', 'Logout successfull!');
@@ -48,7 +35,6 @@ export const logout = async () => {
       }, 500);
     }
   } catch (error) {
-    //alerts.showAlert('error', error.response.data.message);
     alert(error.response.data.message);
   }
 };
@@ -58,7 +44,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
     // const res = await axios();
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:3000/api/v1/users/signup',
+      url: '/api/v1/users/signup',
       data: {
         name,
         email,

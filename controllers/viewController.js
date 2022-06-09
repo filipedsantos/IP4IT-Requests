@@ -11,11 +11,11 @@ exports.getRequests = catchAsync(async (req, res, next) => {
   tomorrow.setDate(tomorrow.getDate() + 1);
 
   const requests = await Request.find({
-    // requestAt: {
-    //   $gte: today,
-    //   $lte: tomorrow,
-    // },
-    isOpen: true,
+    requestAt: {
+      $gte: today,
+      $lte: tomorrow,
+    },
+    // isOpen: true,
   })
     .sort({ isOpen: -1, requestAt: -1 })
     .populate({
