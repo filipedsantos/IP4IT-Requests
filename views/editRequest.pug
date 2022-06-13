@@ -32,11 +32,11 @@ block content
                                 if ca
                                     option(value=`${ca._id}` selected)= `${ca.tag}`
                                 else
-                                option(value='None', selected)= 'None'
-                                each hardw in hardware
-                                    if hardw.hardwareType === 'Webcam'
-                                        option(value=`${hardw._id}`)
-                                            span= `${hardw.tag}`
+                                    option(value='None', selected)= 'None'
+                                    each hardw in hardware
+                                        if hardw.hardwareType === 'Webcam'
+                                            option(value=`${hardw._id}`)
+                                                span= `${hardw.tag}`
 
                 .form__footer
                     button.btn.btn__edit-request(request-id=`${request[0]._id}`) Update

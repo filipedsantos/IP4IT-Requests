@@ -23,7 +23,6 @@ const app = express();
 // Implement CORS
 // Access-Control-Allow-Origin *
 app.use(cors());
-app.options('*', cors());
 
 // Set Security HTTP Headers
 app.use(helmet({ contentSecurityPolicy: false }));
