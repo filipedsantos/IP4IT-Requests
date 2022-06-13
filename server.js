@@ -11,7 +11,7 @@ dotenv.config({ path: './config.env' });
 const app = require('./app');
 
 // Connect MongoDB local DB
-mongoose.connect(process.env.DATABASE_URL_MONGO).then(con => {
+mongoose.connect(process.env.DATABASE_URL).then(con => {
   //console.log(con.connections);
   console.log('DB connection successfully!');
 });

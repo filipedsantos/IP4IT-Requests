@@ -18,7 +18,6 @@ if (newRequestForm) {
 
     const hardware = [];
     const name = document.getElementById('user').value;
-    console.log(name);
 
     const hs = document.getElementById('headset').value;
     if (hs !== 'None') hardware.push(hs);
@@ -45,11 +44,9 @@ if (editRequestForm) {
     const id = document
       .querySelector('.btn__edit-request')
       .getAttribute('request-id');
-    console.log(id);
 
     const hardware = [];
     const name = document.getElementById('user').value;
-    console.log(name);
 
     const hs = document.getElementById('headset').value;
     if (hs !== 'None') hardware.push(hs);
@@ -75,17 +72,14 @@ if (btnFinishRequestParent) {
     .addEventListener('click', function (e) {
       e.preventDefault();
       const click = e.target.getAttribute('request-open');
-      console.log(click);
       // Matching strategy
       if (click === 'true') {
         if (e.target.classList.contains('btn__finish-request')) {
           const id = e.target.getAttribute('request-id');
-          console.log(id);
           finishRequest(id);
         }
 
         if (e.target.classList.contains('btnEdit')) {
-          console.log('press');
           const id = e.target.getAttribute('request-id');
           location.href = `/${id}`;
         }
@@ -112,7 +106,6 @@ if (formSignup) {
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('passwordConfirm').value;
 
-    console.log('sign');
     signup(name, email, password, passwordConfirm);
   });
 }

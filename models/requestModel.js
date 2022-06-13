@@ -58,7 +58,6 @@ requestSchema.methods.updateHardwareToUsed = function () {
 
 requestSchema.statics.updateHardwareToBeInUse = async function (hardwIds) {
   for (const h of hardwIds) {
-    console.log(h);
     const hs = await Hardware.findByIdAndUpdate(h._id, {
       inUse: true,
     });
