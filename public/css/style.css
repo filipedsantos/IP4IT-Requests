@@ -17,6 +17,7 @@
   --lig: 61%;
   --first-color: hsl(var(--hue), var(--sat), var(--lig));
   --first-color-alt: hsl(var(--hue), var(--sat), 57%); /* -4% */
+  --first-color-strong: hsl(var(--hue), var(--sat), 51%); /* -4% */
   --title-color: hsl(var(--hue), 12%, 15%);
   --text-color: hsl(var(--hue), 12%, 45%);
   --text-color-light: hsl(var(--hue), 8%, 75%);
@@ -60,6 +61,8 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+
+  transition: 0.2s;
 }
 
 body {
@@ -224,9 +227,87 @@ img {
   background-color: #eb4d4b;
 }
 
+/*=============== Modal & Overlay ===============*/
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 60rem;
+  background-color: #f3f3f3;
+  padding: 5rem 6rem;
+  box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: all 0.5s;
+}
+
+.modalBtns {
+  display: flex;
+  justify-content: space-around;
+  margin-top: var(--m-1-5);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  transition: all 0.5s;
+}
+
+.btn__modal-cancel {
+  /* font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none; */
+
+  cursor: pointer;
+  border: none;
+  background: none;
+  background-color: var(--text-color-light);
+  color: #fff;
+  font-size: var(--h3-font-size);
+  padding: 1rem 1rem;
+  margin-left: 0.1rem;
+}
+
+.btn__modal-cancel:hover {
+  background-color: var(--text-color);
+}
+
+.btn__modal-confirm {
+  /* font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none; */
+  cursor: pointer;
+  border: none;
+  background: none;
+  background-color: var(--first-color);
+  color: #fff;
+  font-size: var(--h3-font-size);
+  padding: 1rem 1rem;
+  margin-left: 0.1rem;
+}
+
+.btn__modal-confirm:hover {
+  background-color: var(--first-color-strong);
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
 /*=============== NAV ===============*/
 .header {
-  padding: 1rem 1rem;
+  padding: 2rem 4rem;
   display: flex;
   align-items: center;
 }
@@ -234,10 +315,6 @@ img {
 .nav--title {
   display: flex;
   align-items: center;
-}
-
-.nav--user {
-  margin-left: auto;
 }
 
 .nav__el {
@@ -248,15 +325,18 @@ img {
 
 .nav__el:hover {
   font-size: var(--h3-font-size);
-  color: var(--first-color-alt);
 }
 
 .nav__el--logout {
-  background-color: var(--text-color);
+  background-color: var(--text-color-light);
   color: #fff;
   font-size: var(--h3-font-size);
   padding: 1rem 1rem;
-  border-radius: 0.5rem;
+  margin-left: 0.1rem;
+}
+
+.nav__el--logout:hover {
+  background-color: var(--text-color);
 }
 
 /*=============== MAIN ===============*/
@@ -282,11 +362,35 @@ img {
   color: #fff;
   font-size: var(--h3-font-size);
   padding: 1rem 1rem;
-  border-radius: 0.5rem;
+  margin-left: 0.1rem;
 }
 
 .btn__new-request:hover {
   background-color: var(--first-color-alt);
+}
+
+.btn__admin-page {
+  background-color: var(--first-color);
+  color: #fff;
+  font-size: var(--h3-font-size);
+  padding: 1rem 1rem;
+  margin-left: 0.1rem;
+}
+
+.hardware__nav {
+  display: flex;
+}
+
+.btn__admin-page:hover {
+  background-color: var(--first-color-alt);
+}
+
+.right {
+  margin-left: auto;
+}
+
+.btnActive {
+  background-color: var(--first-color-strong);
 }
 
 .btn__finish-request {
@@ -297,7 +401,6 @@ img {
   font-size: var(--h3-font-size);
   padding: 0.5rem 0.5rem;
   border: 0;
-  border-radius: 0.5rem;
 }
 
 .btn__finish-request:hover {
@@ -311,17 +414,17 @@ img {
   background-color: red;
 }
 
-.requests__table {
+.table {
   width: 100%;
 }
 
-.requests__table th {
+.table th {
   background-color: var(--first-color-alt);
   color: #fff;
   padding: 1rem 1rem;
 }
 
-.requests__table td {
+.table td {
   text-align: center;
   background-color: #d4d0d0;
   color: var(--text-color);
@@ -340,6 +443,11 @@ img {
 
 .request-edit--closed {
   pointer-events: none;
+}
+
+/*=============== ADMIN ===============*/
+.input__checkbox {
+  transform: scale(1.5);
 }
 
 /*=============== FOOTER ===============*/

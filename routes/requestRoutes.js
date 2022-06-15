@@ -1,8 +1,11 @@
 const express = require('express');
 
+const authController = require('../controllers/authController');
 const requestController = require('../controllers/requestController');
 
 const router = express.Router();
+
+router.use(authController.protect);
 
 router.route('/finishRequest/:id').patch(requestController.finishRequest);
 

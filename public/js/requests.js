@@ -39,8 +39,8 @@ export const sendEditRequest = async (id, name, hardware) => {
     if (res.data.status === 'success') {
       showAlert('success', 'Request successful!');
       window.setTimeout(() => {
-        location.assign('/');
-      }, 1000);
+        window.location.href.split('/').pop();
+      }, 500);
     }
   } catch (error) {
     showAlert('error', error);
@@ -57,7 +57,7 @@ export const finishRequest = async id => {
     if (res.data.status === 'success') {
       showAlert('success', 'Request finished!');
       window.setTimeout(() => {
-        location.assign('/');
+        location.reload();
       }, 1000);
     }
   } catch (error) {

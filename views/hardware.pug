@@ -1,0 +1,68 @@
+extends base
+
+mixin formHardware(edit, title, btnText)
+    h2.section__title #{title}
+        form.form.form--hardware
+            .form__group
+                label.form__label(for='tag') TAG
+                input#tag.form__input(type='text', placeholder='HS-00' style="text-transform: uppercase" required)
+            .form__group
+                label.form__label(for='type') Type
+                select#type.form__input(name='headset')
+                    optgroup(label='Hardware type')
+                        option(value='Headset', selected)= 'Headset'
+                        option(value='Webcam')= 'Webcam'
+            if edit
+                .form__group
+                    label.form__label(for='using') In Use
+                    select#using.form__input(name='using')
+                        optgroup(label='In use')
+                            option(value='true', selected)= 'Yes'
+                            option(value='false')= 'No'
+            .form__footer
+                button.btn#btnForm #{btnText}
+
+
+block content
+    main.pagewrap
+        .section.hardware__nav
+            .left__side
+                a.btn.btn__admin-page#btnAdmin(href='#') Requests
+                a.btn.btn__admin-page.btnActive#btnHardware(href='#') Hardware
+
+            .right__side.right
+                a.btn.btn__admin-page.btn__hardware#btnNewHardware New Hardware
+                a.btn.btn__admin-page.btn__hardware#btnEditHardware Edit Hardware
+                a.btn.btn__admin-page.btn__hardware#btnDeleteHardware Delete Hardware
+
+        .section.new__hardware(hidden)
+            +formHardware(false, 'Create new Hardware', 'Create')
+        .section.edit__hardware(hidden)
+            +formHardware(true, 'Edit Hardware', 'Update')
+
+        .section
+            table.table
+                thead 
+                    tr
+                        th
+                        th: span Tag
+                        th: span Type
+                        th: span In Use
+                        th: span Times Used
+                tbody
+                    each hw in hardware
+                        tr.requests__row
+                            td(scope="row")
+                                input.input__checkbox(type='checkbox' value=`${hw._id}`)
+                            td= hw.tag
+                            td= hw.hardwareType
+                            td= `${hw.inUse}`.toUpperCase()
+                            td= hw.timesUsed
+
+    .modal.hidden
+        h2.section__title Delete Confirm?
+        .modalBtns
+            button.btn__modal-cancel Cancel
+            button.btn__modal-confirm Delete
+
+    .overlay.hidden

@@ -4,9 +4,10 @@ header.header
         .header__logo
             a(href='/')
                 img(src='/img/IP4IT_logo.png' alt='IP4IT')
-    nav.nav.nav--user
+    nav.nav.right
         if user
-            a.nav__el.nav__el--logout(href='#') Log out
+            a.nav__el.nav__el--logout(href='/admin') Admin
+            a.nav__el.nav__el--logout#btnLogout(href='#') Log out
             //- a.nav__el(href='')
             //-     span= user.name.split(' ')[0]
 

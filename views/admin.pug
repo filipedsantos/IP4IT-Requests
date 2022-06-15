@@ -1,0 +1,14 @@
+extends base
+
+block content
+    main.pagewrap
+        div.section.hardware__nav
+            .left__side
+                a.btn.btn__admin-page.btnActive#btnAdmin(href='#') Requests
+                a.btn.btn__admin-page#btnHardware(href='#') Hardware
+
+            .right__side.right
+                //- a.btn.btn__admin-page.right(href='/newRequest') New Request
+
+        .section
+            include requests

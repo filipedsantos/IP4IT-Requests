@@ -31,6 +31,11 @@ const requestSchema = new mongoose.Schema(
         ],
       },
     ],
+    responsable: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [true, 'A request must contain the IT responsable!'],
+    },
   }, // Schema Options to show up virtual properties in JSON and Object outputs.
   {
     toJSON: { virtuals: true },
@@ -42,6 +47,7 @@ const requestSchema = new mongoose.Schema(
 
 requestSchema.pre('save', function (next) {
   this.requestAt = Date.now();
+  this.populate('responsable');
   // console.log(this.requestAt);
   next();
 });

@@ -1,8 +1,8 @@
 const catchAsync = require('../utils/catchAsync');
 const factory = require('../controllers/handlerFactory');
 const Hardware = require('../models/hardwareModel');
-
 const Request = require('../models/requestModel');
+const { logout } = require('./authController');
 
 exports.getRequests = catchAsync(async (req, res, next) => {
   const today = new Date();
@@ -61,6 +61,29 @@ exports.getEditRequestForm = catchAsync(async (req, res, next) => {
   res.status(200).render('editRequest', {
     title: 'Edit Request',
     request,
+    hardware,
+  });
+});
+
+exports.getAdminPage = catchAsync(async (req, res, next) => {
+  const requests = await Request.find()
+    .sort({ isOpen: -1, requestAt: -1 })
+    .populate({
+      path: 'hardware',
+      fields: 'tag',
+    });
+
+  res.status(200).render('admin', {
+    title: 'Admin',
+    requests,
+  });
+});
+
+exports.getHardwarePage = catchAsync(async (req, res, next) => {
+  const hardware = await Hardware.find().sort({ tag: 1 });
+
+  res.status(200).render('hardware', {
+    title: 'Hardware',
     hardware,
   });
 });

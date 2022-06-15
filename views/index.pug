@@ -3,7 +3,13 @@ extends base
 block content
     main.pagewrap
         if user
-            include requests
+            div.section
+            a.btn.btn__new-request(href='/newRequest') New Request
+            .welcome-gnb.section
+                - if (requests.length === 0)
+                    h1.section__title Welcome to Geneva Business News
+                - else
+                    include requests
         else
              h1.section__title Welcome to Geneva Business News.
              h3.section__subtitle Please Log in to have access.
