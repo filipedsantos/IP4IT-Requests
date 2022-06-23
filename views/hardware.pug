@@ -33,36 +33,72 @@ block content
             .right__side.right
                 a.btn.btn__admin-page.btn__hardware#btnNewHardware New Hardware
                 a.btn.btn__admin-page.btn__hardware#btnEditHardware Edit Hardware
-                a.btn.btn__admin-page.btn__hardware#btnDeleteHardware Delete Hardware
+                a.btn.btn__admin-page.btn__hardware#btnDesactivateHardware Desactivate Hardware
 
         .section.new__hardware(hidden)
-            +formHardware(false, 'Create new Hardware', 'Create')
+            //- +formHardware(false, 'Create new Hardware', 'Create')
+            h2.section__title Create new Hardware
+                form.form.form--hardware
+                    .form__group
+                        label.form__label(for='tag') TAG
+                        input#tag.form__input(type='text', placeholder='HS-00' style="text-transform: uppercase" required)
+                    .form__group
+                        label.form__label(for='type') Type
+                        select#type.form__input(name='headset')
+                            optgroup(label='Hardware type')
+                                option(value='Headset', selected)= 'Headset'
+                                option(value='Webcam')= 'Webcam'
+                    .form__footer
+                        button.btn#btnFormNew Create
+
         .section.edit__hardware(hidden)
-            +formHardware(true, 'Edit Hardware', 'Update')
+            //- +formHardware(true, 'Edit Hardware', 'Update')
+            h2.section__title Edit Hardware
+                form.form.form--hardware
+                    .form__group
+                        label.form__label(for='tag') TAG
+                        input#tagEdit.form__input(type='text', placeholder='HS-00' style="text-transform: uppercase" required)
+                    .form__group
+                        label.form__label(for='type') Type
+                        select#typeEdit.form__input(name='headset')
+                            optgroup(label='Hardware type')
+                                option(value='Headset', selected)= 'Headset'
+                                option(value='Webcam')= 'Webcam'
+                    .form__group
+                        label.form__label(for='using') In Use
+                        select#using.form__input(name='using')
+                            optgroup(label='In use')
+                                option(value='true', selected)= 'Yes'
+                                option(value='false')= 'No'
+                    .form__footer
+                        button.btn#btnFormEdit Update
 
         .section
-            table.table
-                thead 
-                    tr
-                        th
-                        th: span Tag
-                        th: span Type
-                        th: span In Use
-                        th: span Times Used
-                tbody
-                    each hw in hardware
-                        tr.requests__row
-                            td(scope="row")
-                                input.input__checkbox(type='checkbox' value=`${hw._id}`)
-                            td= hw.tag
-                            td= hw.hardwareType
-                            td= `${hw.inUse}`.toUpperCase()
-                            td= hw.timesUsed
+            if hardware.length > 0
+                table.table
+                    thead 
+                        tr
+                            th
+                            th: span Tag
+                            th: span Type
+                            th: span In Use
+                            th: span Times Used
+                    tbody
+                        each hw in hardware
+                            tr.requests__row(id=`${hw._id}`)
+                                td(scope="row")
+                                    input.input__checkbox(type='checkbox' value=`${hw._id}`)
+                                td= hw.tag
+                                td= hw.hardwareType
+                                td= `${hw.inUse}`.toUpperCase()
+                                td= hw.timesUsed
+            else
+                h2.section__subtitle There isn't any Hardware!
 
     .modal.hidden
-        h2.section__title Delete Confirm?
+        h2.section__title Confirm desactivation?
         .modalBtns
             button.btn__modal-cancel Cancel
-            button.btn__modal-confirm Delete
+            button.btn__modal-confirm Desactivate
 
     .overlay.hidden

@@ -22,21 +22,51 @@ export const newHardware = async (tag, hardwareType) => {
     showAlert('error', error.response.data);
   }
 };
-
-export const deleteHardware = async id => {
-  console.log('deleted: ', id);
+export const editHardware = async (id, tag, hardwareType, inUse) => {
   try {
     const res = await axios({
-      method: 'DELETE',
+      method: 'PATCH',
       url: `/api/v1/hardware/${id}`,
+      data: {
+        tag,
+        hardwareType,
+        inUse,
+      },
     });
-
-    if (res.status === 204) {
-      showAlert('success', 'Hardware deleted!');
+    if (res.data.status === 'success') {
+      showAlert('success', 'Hardware updated!');
       window.setTimeout(() => {
         location.assign('/hardware');
       }, 500);
     }
+  } catch (error) {
+    console.error(error.response.data);
+    showAlert('error', error.response.data);
+  }
+};
+
+export const desactivateHardware = async ids => {
+  try {
+    for (const id of ids) {
+      const res = await axios({
+        method: 'PATCH',
+        url: `/api/v1/hardware/${id}`,
+        data: {
+          active: false,
+        },
+      });
+    }
+    // if (res.data.status === 'success') {
+    //   showAlert('success', 'Hardware desactivated!');
+    //   window.setTimeout(() => {
+    //     location.assign('/hardware');
+    //   }, 500);
+    // }
+
+    showAlert('success', 'Hardware desactivated!');
+    window.setTimeout(() => {
+      location.assign('/hardware');
+    }, 500);
   } catch (error) {
     console.error(error.response.data);
     showAlert('error', error.response.data);

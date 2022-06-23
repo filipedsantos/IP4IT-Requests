@@ -3,22 +3,31 @@ block content
     main
         .welcome-requests
             div.section
-                table.table.table__requests
-                    thead 
-                        tr
-                            th
-                            th: span Time
-                            th: span Name
-                            th: span Hardware
-                            th: span Status
-                    tbody
-                        each request in requests
-                            tr.requests__row
-                                td
-                                    a
-                                        span(class=`material-symbols-outlined btnEdit ${request.isOpen ? '' : 'request-edit--closed'}`, request-id=`${request._id}` request-open=`${request.isOpen}`) edit
-                                td: span= request.requestAt.toLocaleString('en-UK', {hour: 'numeric', minute:'numeric', year: 'numeric', month: 'long', day: 'numeric'})
-                                td: span= request.user
-                                - let hw = request.hardware.map(el => {return el.tag;});
-                                td: span= hw
-                                td: button.btn.btn__finish-request(request-id=`${request._id}`, request-open=`${request.isOpen}`, class=`${request.isOpen ? '' : 'request--closed'}`)= `${request.isOpen ? 'Open' : 'Closed'}`
+                if requests
+                    table.table.table__requests
+                        thead 
+                            tr
+                                th
+                                th: span Time
+                                th: span Name
+                                th: span Hardware
+                                th: span Status
+                        tbody
+                            each request in requests
+                                tr.requests__row
+                                    td
+                                        a
+                                            span(class=`material-symbols-outlined btnEdit ${request.isOpen ? '' : 'request-edit--closed'}`, request-id=`${request._id}` request-open=`${request.isOpen}`) edit
+                                    td: span= request.requestAt.toLocaleString('en-UK', {hour: 'numeric', minute:'numeric', year: 'numeric', month: 'long', day: 'numeric'})
+                                    td: span= request.user
+                                    - let hw = request.hardware.map(el => {return el.tag;});
+                                    td: span= hw
+                                    td: button.btn.btn__finish-request(request-id=`${request._id}`, request-open=`${request.isOpen}`, class=`${request.isOpen ? '' : 'request--closed'}`)= `${request.isOpen ? 'Open' : 'Closed'}`
+                    
+                    //- # PAGINATION
+                    //- if requests
+                    //-     div.pagination(data-page=1 data-nelements=requests.length)
+                    //-         a.btn--inline.pagination__btn--previous Load More
+                    //-         //- a.btn--inline.pagination__btn--next.right
+                else
+                    h1.section__subtitle There isn't any Requests!

@@ -1,8 +1,6 @@
 const catchAsync = require('../utils/catchAsync');
-const factory = require('../controllers/handlerFactory');
 const Hardware = require('../models/hardwareModel');
 const Request = require('../models/requestModel');
-const { logout } = require('./authController');
 
 exports.getRequests = catchAsync(async (req, res, next) => {
   const today = new Date();
@@ -10,11 +8,26 @@ exports.getRequests = catchAsync(async (req, res, next) => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
 
+  const page = req.query.page || 1;
+  console.log('page: ', page);
+  // if (req.quey.page) {
+  //   page = req.query.page || 1;
+  // }
+
   const requests = await Request.find({
-    requestAt: {
-      $gte: today,
-      $lte: tomorrow,
-    },
+    $or: [
+      {
+        requestAt: {
+          $gte: today,
+          $lte: tomorrow,
+        },
+      },
+      { isOpen: true },
+    ],
+    // requestAt: {
+    //   $gte: today,
+    //   $lte: tomorrow,
+    // },
     // isOpen: true,
   })
     .sort({ isOpen: -1, requestAt: -1 })
@@ -42,7 +55,9 @@ exports.getSignUpForm = catchAsync(async (req, res, next) => {
 });
 
 exports.getNewRequestForm = catchAsync(async (req, res, next) => {
-  const hardware = await Hardware.find({ inUse: 'false' });
+  const hardware = await Hardware.find({ inUse: 'false', active: true }).sort({
+    tag: 1,
+  });
 
   res.status(200).render('newRequest', {
     title: 'New Request',
@@ -56,7 +71,7 @@ exports.getEditRequestForm = catchAsync(async (req, res, next) => {
     fields: 'tag',
   });
 
-  const hardware = await Hardware.find({ inUse: 'false' });
+  const hardware = await Hardware.find({ inUse: 'false', active: true });
 
   res.status(200).render('editRequest', {
     title: 'Edit Request',
@@ -80,7 +95,7 @@ exports.getAdminPage = catchAsync(async (req, res, next) => {
 });
 
 exports.getHardwarePage = catchAsync(async (req, res, next) => {
-  const hardware = await Hardware.find().sort({ tag: 1 });
+  const hardware = await Hardware.find({ active: true }).sort({ tag: 1 });
 
   res.status(200).render('hardware', {
     title: 'Hardware',

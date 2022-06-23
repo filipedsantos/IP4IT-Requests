@@ -346,6 +346,22 @@ img {
   align-self: center;
 }
 
+/*=============== PAGINATION ===============*/
+.pagination {
+  display: flex;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+
+.btn--inline {
+  transition: 0ms;
+}
+
+.btn--inline:hover {
+  cursor: pointer;
+  color: var(--first-color);
+}
+
 /*=============== Requests ===============*/
 
 .requests__welcome h1 {

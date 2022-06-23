@@ -1,7 +1,7 @@
 import { showAlert } from './alerts.js';
 import { finishRequest, sendNewRequest, sendEditRequest } from './requests.js';
 import { login, logout, signup } from './login.js';
-import { deleteHardware, newHardware } from './hardware.js';
+import { desactivateHardware, newHardware, editHardware } from './hardware.js';
 
 const welcomeMessage = document.querySelector('.welcome-gnb');
 const welcomeRequests = document.querySelector('.welcome-requests');
@@ -20,14 +20,20 @@ const btnsHardware = document.querySelectorAll('.btn__hardware');
 
 const btnNewHardware = document.getElementById('btnNewHardware');
 const btnEditHardware = document.getElementById('btnEditHardware');
-const btnDeleteHardware = document.getElementById('btnDeleteHardware');
+const btnDesactivateHardware = document.getElementById(
+  'btnDesactivateHardware'
+);
 
 const divNewHardware = document.querySelector('.new__hardware');
 const divEditHardware = document.querySelector('.edit__hardware');
 
-const btnForm = document.getElementById('btnForm');
+const btnFormNew = document.getElementById('btnFormNew');
+const btnFormEdit = document.getElementById('btnFormEdit');
 const inputTag = document.getElementById('tag');
 const inputType = document.getElementById('type');
+
+const inputTagEdit = document.getElementById('tagEdit');
+const inputTypeEdit = document.getElementById('typeEdit');
 const inputInUse = document.getElementById('using');
 
 const modal = document.querySelector('.modal');
@@ -35,7 +41,13 @@ const overlay = document.querySelector('.overlay');
 const btnCancelModal = document.querySelector('.btn__modal-cancel');
 const btnConfirmModal = document.querySelector('.btn__modal-confirm');
 
+const paginationDiv = document.querySelector('.pagination');
+const btnPaginationPrev = document.querySelector('.pagination__btn--previous');
+const btnPaginationNext = document.querySelector('.pagination__btn--next');
+
 // const inputCheckboxes = document.querySelectorAll('.input__checkbox');
+
+let viewsPerPage = 55;
 
 // New request form
 if (newRequestForm) {
@@ -170,8 +182,8 @@ const toogleVisibilityFormHw = function (id) {
     divEditHardware.hidden = !visible;
     btnEditHardware.classList.add('btnActive');
   }
-  if (id === 'btnDeleteHardware') {
-    btnDeleteHardware.classList.add('btnActive');
+  if (id === 'btnDesactivateHardware') {
+    btnDesactivateHardware.classList.add('btnActive');
   }
 };
 
@@ -204,9 +216,19 @@ if (divRightSection) {
           return;
         } else {
           toogleVisibilityFormHw(clicked.id);
+
+          const hardwareInfo = document.getElementById(hwChoosed);
+
+          inputTagEdit.value =
+            hardwareInfo.getElementsByTagName('td')[1].innerHTML;
+          inputTypeEdit.value =
+            hardwareInfo.getElementsByTagName('td')[2].innerHTML;
+          inputInUse.value = hardwareInfo
+            .getElementsByTagName('td')[3]
+            .innerHTML.toLowerCase();
         }
       }
-      if (e.target.id === 'btnDeleteHardware') {
+      if (e.target.id === 'btnDesactivateHardware') {
         if (hwChoosed.length === 0) {
           showAlert('error', 'Please select at least 1 piece of Hardware!');
           return;
@@ -217,7 +239,7 @@ if (divRightSection) {
             .then(res => {
               // console.log(res);
               closeModal();
-              deleteHardware(hwChoosed);
+              desactivateHardware(hwChoosed);
             })
             .catch(error => {
               // console.error(error);
@@ -229,14 +251,28 @@ if (divRightSection) {
   });
 }
 
-if (btnForm) {
-  btnForm.addEventListener('click', e => {
+if (btnFormNew) {
+  btnFormNew.addEventListener('click', e => {
     e.preventDefault();
     const tag = inputTag.value.toUpperCase();
     const type = inputType.value;
     console.log(tag, type);
 
     newHardware(tag, type);
+  });
+}
+
+if (btnFormEdit) {
+  btnFormEdit.addEventListener('click', e => {
+    e.preventDefault();
+    const tag = inputTagEdit.value.toUpperCase();
+    const type = inputTypeEdit.value;
+    const using = inputInUse.value;
+
+    const [...value] = document.querySelectorAll('.input__checkbox:checked');
+    const hwChoosed = value.map(el => el.value);
+
+    editHardware(hwChoosed, tag, type, using);
   });
 }
 
@@ -256,10 +292,80 @@ const promiseModal = function (e) {
     openModal(e);
 
     btnCancelModal.addEventListener('click', e => {
-      reject('Hardware delete error!');
+      reject('Hardware desactivated error!');
     });
     btnConfirmModal.addEventListener('click', e => {
-      resolve('Hardware deleted successfully!');
+      resolve('Hardware desactivated successfully!');
     });
   });
 };
+
+// PAGINATION
+// const renderPagination = function (page, results, resultsPerPage) {
+//   const currentPage = page;
+//   const numPages = Math.ceil(results / resultsPerPage);
+
+//   console.log(currentPage, numPages);
+
+//   // Page 1, and there are other pages
+//   if (currentPage === 1 && numPages > 1) {
+//     console.log('1s page');
+
+//     btnPaginationPrev.classList.add('hidden');
+//     btnPaginationNext.classList.remove('hidden');
+
+//     btnPaginationPrev.innerHTML = `< Page ${currentPage - 1}`;
+//     btnPaginationNext.innerHTML = `Page ${currentPage + 1} >`;
+//     return;
+//   }
+
+//   // Last page
+//   if (currentPage === numPages && numPages > 1) {
+//     // btnPaginationNext.classlist.add('hidden');
+//     console.log('last page');
+
+//     btnPaginationNext.classList.add('hidden');
+//     btnPaginationPrev.classList.remove('hidden');
+
+//     btnPaginationPrev.innerHTML = `< Page ${currentPage - 1}`;
+//     btnPaginationNext.innerHTML = `Page ${currentPage + 1} >`;
+//     return;
+//   }
+
+//   // Other page
+//   if (currentPage < numPages) {
+//     // btnPaginationPrev.classlist.remove('hidden');
+//     // btnPaginationNext.classlist.remove('hidden');
+//     console.log('other page');
+
+//     btnPaginationPrev.classList.remove('hidden');
+//     btnPaginationNext.classList.remove('hidden');
+
+//     btnPaginationPrev.innerHTML = `< Page ${currentPage - 1}`;
+//     btnPaginationNext.innerHTML = `Page ${currentPage + 1} >`;
+//     return;
+//   }
+// };
+
+// if (paginationDiv) {
+//   // page, results, resultsPerPage
+//   let page = paginationDiv.getAttribute('data-page') * 1;
+//   let results = paginationDiv.getAttribute('data-nelements') * 1;
+
+//   let resultsPerPage = 5;
+//   renderPagination(page, results, resultsPerPage);
+//   btnPaginationPrev.addEventListener('click', e => {
+//     e.preventDefault();
+
+//     page -= 1;
+//     paginationDiv.setAttribute('data-page', page);
+//     renderPagination(page, results, resultsPerPage);
+//   });
+
+//   btnPaginationNext.addEventListener('click', e => {
+//     e.preventDefault();
+//     page += 1;
+//     paginationDiv.setAttribute('data-page', page);
+//     renderPagination(page, results, resultsPerPage);
+//   });
+// }

@@ -39,7 +39,7 @@ export const sendEditRequest = async (id, name, hardware) => {
     if (res.data.status === 'success') {
       showAlert('success', 'Request successful!');
       window.setTimeout(() => {
-        window.location.href.split('/').pop();
+        location.assign('/');
       }, 500);
     }
   } catch (error) {
