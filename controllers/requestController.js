@@ -11,15 +11,10 @@ exports.getOneRequest = factory.getOne(Request);
 exports.deleteRequest = factory.deleteOne(Request);
 
 exports.createRequest = catchAsync(async (req, res, next) => {
-  console.log(req.user);
-
   req.body.responsable = req.user;
-  console.log(req.body);
 
   const newRequest = await Request.create(req.body);
   newRequest.updateHardwareToUsed();
-
-  console.log(newRequest);
 
   res.status(201).json({
     status: 'success',

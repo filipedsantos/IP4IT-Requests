@@ -19,7 +19,7 @@ export const newHardware = async (tag, hardwareType) => {
     }
   } catch (error) {
     console.error(error.response.data);
-    showAlert('error', error.response.data);
+    showAlert('error', error.response.data.message);
   }
 };
 export const editHardware = async (id, tag, hardwareType, inUse) => {
@@ -41,7 +41,7 @@ export const editHardware = async (id, tag, hardwareType, inUse) => {
     }
   } catch (error) {
     console.error(error.response.data);
-    showAlert('error', error.response.data);
+    showAlert('error', error.response.data.message);
   }
 };
 
@@ -69,6 +69,6 @@ export const desactivateHardware = async ids => {
     }, 500);
   } catch (error) {
     console.error(error.response.data);
-    showAlert('error', error.response.data);
+    showAlert('error', error.response.data.message);
   }
 };

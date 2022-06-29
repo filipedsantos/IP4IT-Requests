@@ -13,6 +13,7 @@ const requestRouter = require('./routes/requestRoutes');
 const userRoute = require('./routes/userRoutes');
 const hardwareRoute = require('./routes/hardwareRoutes');
 const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
 
 const viewRouter = require('./routes/viewRouter');
 
@@ -72,5 +73,7 @@ app.use('/api/v1/hardware', hardwareRoute);
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
+
+app.use(globalErrorHandler);
 
 module.exports = app;

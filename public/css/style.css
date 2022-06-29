@@ -61,8 +61,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-
-  transition: 0.2s;
 }
 
 body {
@@ -410,7 +408,7 @@ img {
 
 .btn__finish-request {
   display: inline-block;
-  width: 80%;
+  width: 90%;
   background-color: green;
   color: #fff;
   font-size: var(--h3-font-size);
@@ -421,7 +419,7 @@ img {
 .btn__finish-request:hover {
   background-color: red;
   color: #fff;
-  font-size: var(--h3-font-size);
+  /* font-size: var(--h3-font-size); */
   border: 0;
 }
 

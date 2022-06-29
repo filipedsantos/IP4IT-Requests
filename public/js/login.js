@@ -11,16 +11,14 @@ export const login = async (email, password) => {
       },
     });
 
-    console.log(res);
-
     if (res.data.status === 'success') {
-      showAlert('success', 'Login successfull!');
+      showAlert('success', 'Login successful!');
       window.setTimeout(() => {
         location.assign('/');
       }, 500);
     }
   } catch (error) {
-    showAlert('error', error);
+    showAlert('error', error.response.data.message);
   }
 };
 
@@ -31,7 +29,7 @@ export const logout = async () => {
       url: '/api/v1/users/logout',
     });
     if (res.data.status === 'success') {
-      showAlert('success', 'Logout successfull!');
+      showAlert('success', 'Logout successful!');
       window.setTimeout(() => {
         location.assign('/');
       }, 500);
@@ -56,13 +54,13 @@ export const signup = async (name, email, password, passwordConfirm) => {
     });
 
     if (res.data.status === 'success') {
-      showAlert('success', 'Signup successfull!');
+      showAlert('success', 'Signup successful!');
       window.setTimeout(() => {
         location.assign('/');
       }, 500);
     }
   } catch (error) {
     console.error(error.response.data);
-    showAlert('error', error.response.data);
+    showAlert('error', error.response.data.message);
   }
 };

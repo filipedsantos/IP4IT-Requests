@@ -276,7 +276,6 @@ if (btnFormNew) {
     e.preventDefault();
     const tag = inputTag.value.toUpperCase();
     const type = inputType.value;
-    console.log(tag, type);
 
     newHardware(tag, type);
   });

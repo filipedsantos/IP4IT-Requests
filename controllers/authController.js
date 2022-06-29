@@ -16,7 +16,7 @@ const createSendToken = (user, statusCode, res) => {
 
   const cookieOptions = {
     expires: new Date(
-      // 90 days defined -> *24H *60MIN * 60SEG * 1000Miliseconds
+      // 10 days defined -> *24H *60MIN * 60SEG * 1000Miliseconds
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
@@ -95,7 +95,6 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 2. Verify token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log(decoded);
 
   // 3. Check if user still exists
   const currentUser = await User.findById(decoded.id);

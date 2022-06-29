@@ -20,7 +20,7 @@ export const sendNewRequest = async (name, hardware) => {
       }, 1000);
     }
   } catch (error) {
-    showAlert('error', error);
+    showAlert('error', error.response.data.message);
   }
 };
 
@@ -43,7 +43,7 @@ export const sendEditRequest = async (id, name, hardware) => {
       }, 500);
     }
   } catch (error) {
-    showAlert('error', error);
+    showAlert('error', error.response.data.message);
   }
 };
 
@@ -61,6 +61,6 @@ export const finishRequest = async id => {
       }, 1000);
     }
   } catch (error) {
-    showAlert('error', error);
+    showAlert('error', error.response.data.message);
   }
 };

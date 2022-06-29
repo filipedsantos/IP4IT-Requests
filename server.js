@@ -11,7 +11,7 @@ dotenv.config({ path: './config.env' });
 const app = require('./app');
 
 // Connect MongoDB local DB
-mongoose.connect(process.env.DATABASE_URL).then(con => {
+mongoose.connect(process.env.DATABASE_URL_MONGO).then(con => {
   //console.log(con.connections);
   console.log('DB connection successfully!');
 });
@@ -19,7 +19,7 @@ mongoose.connect(process.env.DATABASE_URL).then(con => {
 // Start Server
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
-  console.log(`App running (${process.env.NODE_ENV}) on port ${port}...`);
+  console.log(`App running on port ${port}... (${process.env.NODE_ENV})`);
 });
 
 process.on('unhandledRejection', err => {
