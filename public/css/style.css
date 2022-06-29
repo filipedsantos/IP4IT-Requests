@@ -388,7 +388,6 @@ img {
 .btn__admin-page {
   background-color: var(--first-color);
   color: #fff;
-  font-size: var(--h3-font-size);
   padding: 1rem 1rem;
   margin-left: 0.1rem;
 }

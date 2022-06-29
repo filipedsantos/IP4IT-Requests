@@ -14,10 +14,7 @@ const requestSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    requestAt: {
-      type: Date,
-      default: Date.now(),
-    },
+    requestAt: { type: Date, default: Date.now },
     deliveredAt: Date,
     // Hardware -> Array,
     // implementing by reference
@@ -46,7 +43,7 @@ const requestSchema = new mongoose.Schema(
 // Document middleware
 
 requestSchema.pre('save', function (next) {
-  this.requestAt = Date.now();
+  // this.requestAt = Date.now();
   this.populate('responsable');
   // console.log(this.requestAt);
   next();

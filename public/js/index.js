@@ -121,6 +121,26 @@ if (btnFinishRequestParent) {
       }
     }
   });
+
+  document.querySelector('.table').addEventListener('mouseover', function (e) {
+    if (
+      e.target.classList.contains('btn__finish-request') &&
+      !e.target.classList.contains('request--closed')
+    ) {
+      e.target.textContent = 'Close';
+      e.target.style.backgroundColor = '#f3b61f';
+    }
+  });
+
+  document.querySelector('.table').addEventListener('mouseout', function (e) {
+    if (
+      e.target.classList.contains('btn__finish-request') &&
+      !e.target.classList.contains('request--closed')
+    ) {
+      e.target.textContent = 'Open';
+      e.target.style.backgroundColor = 'green';
+    }
+  });
 }
 
 if (formLogin) {

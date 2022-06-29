@@ -8,12 +8,6 @@ exports.getRequests = catchAsync(async (req, res, next) => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
 
-  const page = req.query.page || 1;
-  console.log('page: ', page);
-  // if (req.quey.page) {
-  //   page = req.query.page || 1;
-  // }
-
   const requests = await Request.find({
     $or: [
       {
