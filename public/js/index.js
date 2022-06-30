@@ -45,10 +45,6 @@ const paginationDiv = document.querySelector('.pagination');
 const btnPaginationPrev = document.querySelector('.pagination__btn--previous');
 const btnPaginationNext = document.querySelector('.pagination__btn--next');
 
-// const inputCheckboxes = document.querySelectorAll('.input__checkbox');
-
-let viewsPerPage = 55;
-
 // New request form
 if (newRequestForm) {
   newRequestForm.addEventListener('submit', e => {
